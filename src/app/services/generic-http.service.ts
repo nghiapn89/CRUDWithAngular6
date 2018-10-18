@@ -5,11 +5,11 @@ import { map } from 'rxjs/operators';
 import { QueryOptions } from './query-options';
 
 @Injectable({
-  providedIn: 'root'
+
 })
 
 export class Resource {
-  id: number ;
+  Id: number ;
 }
 
 export interface Serializer {
@@ -30,8 +30,8 @@ export class GenericHttpService<T extends Resource> {
   }
   public update(item: T): Observable<T> {
     return this.httpClient
-      .put<T>(`${this.url}/${this.endpoint}/${item.id}`, this.serializer.toJson(item))
-        .pipe(map(data => this.serializer.fromJson(data) as T));
+      .put<T>(`${this.url}/${this.endpoint}/${item.Id}`, this.serializer.toJson(item))
+      .pipe(map(data => this.serializer.fromJson(data) as T));
   }
   public read(id: number): Observable<T> {
     return this.httpClient
@@ -41,6 +41,11 @@ export class GenericHttpService<T extends Resource> {
   public list(queryOptions: QueryOptions): Observable<T[]> {
     return this.httpClient
       .get(`${this.url}/${this.endpoint}?${queryOptions.toQueryString()}`)
+      .pipe(map((data: any) => this.convertData(data.items)));
+  }
+  public getAll(): Observable<T[]> {
+    return this.httpClient
+      .get(`${this.url}/${this.endpoint}}`)
       .pipe(map((data: any) => this.convertData(data.items)));
   }
   public delete(id: number) {

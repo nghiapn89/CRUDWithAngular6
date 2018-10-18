@@ -1,15 +1,152 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { DataTableModule, SharedModule, ButtonModule, DialogModule } from 'primeng/primeng';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../../app/model/product';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css',
+    '../../../../node_modules/primeng/resources/primeng.min.css',
+    '../../../../node_modules/primeng/resources/themes/omega/theme.css'],
+  encapsulation: ViewEncapsulation.None,
+  providers: [ProductService]
 })
 export class ProductComponent implements OnInit {
 
-  constructor() { }
+  public products: Product[];
+  public products_error: Boolean = false;
+  public product = new Product();
+  public isAdd: Boolean = false;
+  public isEdit: Boolean = false;
+
+  public isLoadingData: Boolean = false;
+
+  addProductFG: FormGroup;
+  editProductFG: FormGroup;
+
+  addSuccess: boolean;
+  editSuccess; boolean;
+
+  displayAddDialog: Boolean = false;
+  displayEditDialog: Boolean = false;
+
+  constructor(private http: Http, private productService: ProductService, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.addProductFG = this.fb.group({
+      'name': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+    });
+
+    this.editProductFG = this.fb.group({
+      'name': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+    });
+
+    this.isAdd = true;
+    this.isEdit = false;
+    this.getAllProducts();
+  }
+
+  public getAllProducts() {
+    this.isLoadingData = true;
+    this.productService.getAll()
+      .subscribe(
+        data => {
+          this.products = data;
+        },
+        error => {
+          console.log(error),
+            this.isLoadingData = false;
+        },
+        () => {
+          this.isLoadingData = false;
+        });
+  }
+
+  public editProduct(_product: Product) {
+    this.displayEditDialog = true;
+    this.isEdit = true;
+    this.isAdd = false;
+    this.product = { Id: _product.Id, Name: _product.Name, Description: _product.Description };
+  }
+
+  public updateProduct(product) {
+    this.productService.update(product).subscribe(
+      data => {
+        this.getAllProducts();
+        alert('Product Updated Successfully!');
+        this.editSuccess = true;
+        this.displayEditDialog = false;
+
+        this.product = new Product();
+        this.isEdit = false;
+        this.isAdd = true;
+        return true;
+      },
+      error => {
+        console.error('Error saving Product!');
+        this.editSuccess = false;
+        alert(error);
+      }
+    );
+  }
+
+  public deleteProduct(_product: Product) {
+    if (confirm('Bạn có chắc chắc muốn xóa Sản phẩm này?')) {
+      this.productService.delete(_product.Id).subscribe(
+        data => {
+          // refresh the list
+          alert('Product Deleted Successfully!');
+          this.getAllProducts();
+          return true;
+        },
+        error => {
+          this.isLoadingData = false;
+          console.error('Error deleting Product!');
+          alert(error);
+        },
+        () => {
+          this.isLoadingData = false;
+        }
+      );
+    }
+  }
+
+  public clearData(): void {
+    this.product = new Product();
+    this.isEdit = false;
+    this.isAdd = true;
+
+    this.displayAddDialog = false;
+    this.displayEditDialog = false;
+  }
+
+  addProduct(product: Product) {
+
+    this.isAdd = true;
+    this.isEdit = false;
+
+    this.productService.create(product).subscribe(
+      data => {
+        this.getAllProducts();
+        alert('Product Added Successfully!');
+        this.addSuccess = true;
+        this.displayAddDialog = false;
+
+        this.product = new Product();
+        return true;
+      },
+      error => {
+        console.error('Error saving Product!');
+        this.addSuccess = false;
+        alert(error);
+      }
+    );
+  }
+  addProductDialog() {
+    this.displayAddDialog = true;
   }
 
 }

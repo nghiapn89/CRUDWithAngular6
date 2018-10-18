@@ -30,4 +30,5 @@ import { ProductComponent } from './Pages/product/product.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
