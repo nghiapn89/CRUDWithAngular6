@@ -1038,7 +1038,6 @@ throw new Error('AdminLTE requires jQuery')
   };
 
   Tree.prototype.toggle = function (link, event) {
-    debugger;
     var treeviewMenu = link.next(Selector.treeviewMenu);
     var parentLi     = link.parent();
     var isOpen       = parentLi.hasClass(ClassName.open);
@@ -1059,7 +1058,6 @@ throw new Error('AdminLTE requires jQuery')
   };
 
   Tree.prototype.expand = function (tree, parent) {
-    debugger;
     var expandedEvent = $.Event(Event.expanded);
 
     if (this.options.accordion) {

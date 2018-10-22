@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { DataTableModule, SharedModule, ButtonModule, DialogModule } from 'primeng/primeng';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../app/model/product';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -12,7 +11,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
     '../../../../node_modules/primeng/resources/primeng.min.css',
     '../../../../node_modules/primeng/resources/themes/omega/theme.css'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ProductService]
+  providers: [ProductService, FormBuilder, Validators]
 })
 export class ProductComponent implements OnInit {
 
@@ -28,7 +27,7 @@ export class ProductComponent implements OnInit {
   editProductFG: FormGroup;
 
   addSuccess: boolean;
-  editSuccess; boolean;
+  editSuccess: boolean;
 
   displayAddDialog: Boolean = false;
   displayEditDialog: Boolean = false;

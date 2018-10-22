@@ -3,7 +3,6 @@ import { GenericHttpService } from './generic-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../app/model/product';
 
-@Injectable()
 export class ProductSerializer {
   fromJson(json: any): Product {
     const product = new Product();
@@ -18,13 +17,18 @@ export class ProductSerializer {
     };
   }
 }
-@Injectable()
+
+
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductService extends GenericHttpService<Product> {
 
   constructor(httpClient: HttpClient) {
     super(
       httpClient,
-      '',
+      'http://localhost:4500',
       'Product',
       new ProductSerializer()
     );

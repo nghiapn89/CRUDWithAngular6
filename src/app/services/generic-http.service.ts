@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { QueryOptions } from './query-options';
 
 @Injectable({
-
+  providedIn: 'root'
 })
 
 export class Resource {

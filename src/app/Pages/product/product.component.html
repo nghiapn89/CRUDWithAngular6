@@ -4,9 +4,9 @@
     <div style="padding-top:10px">
       <p-dataTable [value]="products" [responsive]="true" [rows]="5" [paginator]="true">
           <p-column field="Id" hidden="hidden"></p-column>
-          <p-column field="Name" header="Name" sortable="true" [filter]="true" filterPlaceholder="Search"></p-column>
-          <p-column field="Price" header="Price" sortable="true" [filter]="true" filterPlaceholder="Search"></p-column>
-          <p-column>
+          <p-column field="Name" header="Tên sản phẩm" sortable="true" [filter]="true" filterPlaceholder="Tìm kiếm"></p-column>
+          <p-column field="Price" header="Đơn giá" sortable="true" [filter]="true" filterPlaceholder="Tìm kiếm"></p-column>
+          <p-column header="#">
               <ng-template let-product="rowData" pTemplate="body">
                   <button type="button" pButton (click)="editProduct(product)" icon="fa-pencil-square-o"></button>
                   <button type="button" pButton (click)="deleteProduct(product)" icon="fa-times"></button>
