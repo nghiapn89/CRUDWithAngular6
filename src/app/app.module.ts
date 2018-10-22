@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule} from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -13,6 +14,7 @@ import { ProductService } from '../app/services/product.service';
 
 import { DataTableModule, SharedModule, ButtonModule, DialogModule } from 'primeng/primeng';
 import { HttpClientModule } from '@angular/common/http';
+import { AppGlobals } from './shared/app.global';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     HttpModule,
     DataTableModule, SharedModule, ButtonModule, DialogModule,
@@ -35,7 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
       }
    ])
   ],
-  providers: [ProductService],
+  providers: [ProductService, AppGlobals],
   bootstrap: [AppComponent]
 })
 export class AppModule {

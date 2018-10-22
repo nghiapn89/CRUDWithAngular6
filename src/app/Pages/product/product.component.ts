@@ -14,7 +14,6 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
   providers: [ProductService, FormBuilder, Validators]
 })
 export class ProductComponent implements OnInit {
-
   public products: Product[];
   public products_error: Boolean = false;
   public product = new Product();
@@ -25,6 +24,11 @@ export class ProductComponent implements OnInit {
 
   addProductFG: FormGroup;
   editProductFG: FormGroup;
+
+  createUrl = ' ';
+  updateUrl = ' ';
+  deleteUrl = ' ';
+  getAllUrl = ' ';
 
   addSuccess: boolean;
   editSuccess: boolean;
@@ -45,12 +49,22 @@ export class ProductComponent implements OnInit {
 
     this.isAdd = true;
     this.isEdit = false;
-    this.getAllProducts();
+
+    const p1: Product = new Product();
+    p1.Id = 1;
+    p1.Name = 'Áo thun';
+    p1.Price = 150000;
+    const p2: Product = new Product();
+    p2.Id = 2;
+    p2.Name = 'Quần Jean';
+    p2.Price = 200000;
+    this.products = [p1, p2];
+    // this.getAllProducts();
   }
 
   public getAllProducts() {
     this.isLoadingData = true;
-    this.productService.getAll()
+    this.productService.getAll(this.getAllUrl)
       .subscribe(
         data => {
           this.products = data;
@@ -68,11 +82,11 @@ export class ProductComponent implements OnInit {
     this.displayEditDialog = true;
     this.isEdit = true;
     this.isAdd = false;
-    this.product = { Id: _product.Id, Name: _product.Name, Description: _product.Description };
+    this.product = { Id: _product.Id, Name: _product.Name, Description: _product.Description, Price : _product.Price };
   }
 
   public updateProduct(product) {
-    this.productService.update(product).subscribe(
+    this.productService.update(product, this.updateUrl).subscribe(
       data => {
         this.getAllProducts();
         alert('Product Updated Successfully!');
@@ -94,7 +108,7 @@ export class ProductComponent implements OnInit {
 
   public deleteProduct(_product: Product) {
     if (confirm('Bạn có chắc chắc muốn xóa Sản phẩm này?')) {
-      this.productService.delete(_product.Id).subscribe(
+      this.productService.delete(_product.Id, this.deleteUrl).subscribe(
         data => {
           // refresh the list
           alert('Product Deleted Successfully!');
@@ -127,7 +141,7 @@ export class ProductComponent implements OnInit {
     this.isAdd = true;
     this.isEdit = false;
 
-    this.productService.create(product).subscribe(
+    this.productService.create(product, this.createUrl).subscribe(
       data => {
         this.getAllProducts();
         alert('Product Added Successfully!');

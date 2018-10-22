@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { GenericHttpService } from './generic-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../app/model/product';
+import { AppGlobals } from '../shared/app.global';
+import { from } from 'rxjs';
 
 export class ProductSerializer {
   fromJson(json: any): Product {
@@ -26,11 +28,6 @@ export class ProductSerializer {
 export class ProductService extends GenericHttpService<Product> {
 
   constructor(httpClient: HttpClient) {
-    super(
-      httpClient,
-      'http://localhost:4500',
-      'Product',
-      new ProductSerializer()
-    );
+    super(new AppGlobals(), httpClient, new ProductSerializer());
   }
 }

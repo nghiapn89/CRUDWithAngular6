@@ -1,18 +1,28 @@
 <section class="content">
-  <h3>Danh sách sản phẩm</h3>
-  <div>
-    <div style="padding-top:10px">
-      <p-dataTable [value]="products" [responsive]="true" [rows]="5" [paginator]="true">
-          <p-column field="Id" hidden="hidden"></p-column>
-          <p-column field="Name" header="Tên sản phẩm" sortable="true" [filter]="true" filterPlaceholder="Tìm kiếm"></p-column>
-          <p-column field="Price" header="Đơn giá" sortable="true" [filter]="true" filterPlaceholder="Tìm kiếm"></p-column>
-          <p-column header="#">
-              <ng-template let-product="rowData" pTemplate="body">
-                  <button type="button" pButton (click)="editProduct(product)" icon="fa-pencil-square-o"></button>
-                  <button type="button" pButton (click)="deleteProduct(product)" icon="fa-times"></button>
-              </ng-template>
-          </p-column>
-      </p-dataTable>
-  </div>
-  </div>
+    <h3>Danh sách sản phẩm</h3>
+    <div>
+        <div style="padding-top:10px">
+            <p-dataTable #dt [value]="products" [responsive]="true" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,50,100,200]"
+                [scrollable]="true" scrollHeight="200px">
+                <!-- <p-header>
+                    <div class="ui-helper-clearfix">
+                        <button type="button" pButton icon="fa fa-file-excel-o" iconPos="left" label="EXCEL" (click)="dt.exportCSV()"
+                            style="float:left"></button>
+                        <div></div>
+                        <button type="button" pButton icon="fa fa-file-word-o" iconPos="left" label="WORD" (click)="dt.exportCSV()"
+                            style="float:left"></button>
+                    </div>
+                </p-header> -->
+                <p-column field="Id" hidden="hidden"></p-column>
+                <p-column field="Name" header="Tên sản phẩm" sortable="true" [filter]="true" filterPlaceholder="Tìm kiếm"></p-column>
+                <p-column field="Price" header="Đơn giá" sortable="true" [filter]="true" filterPlaceholder="Tìm kiếm"></p-column>
+                <p-column header="#">
+                    <ng-template let-product="rowData" pTemplate="body">
+                        <button type="button" pButton (click)="editProduct(product)" icon=" fa fa-pencil-square-o"></button>
+                        <button type="button" pButton (click)="deleteProduct(product)" icon="fa fa-times"></button>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
 </section>
