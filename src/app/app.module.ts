@@ -12,6 +12,7 @@ import { ContentComponent } from './Components/content/content.component';
 import { ProductComponent } from './Pages/product/product.component';
 import { ProductService } from '../app/services/product.service';
 
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { DataTableModule, SharedModule, ButtonModule, DialogModule } from 'primeng/primeng';
 import { HttpClientModule } from '@angular/common/http';
 import { AppGlobals } from './shared/app.global';
@@ -32,10 +33,7 @@ import { AppGlobals } from './shared/app.global';
     HttpModule,
     DataTableModule, SharedModule, ButtonModule, DialogModule,
     RouterModule.forRoot([
-      {
-         path: 'app-product',
-         component: ProductComponent
-      }
+      { path: 'app-product', component: ProductComponent }
    ])
   ],
   providers: [ProductService, AppGlobals],

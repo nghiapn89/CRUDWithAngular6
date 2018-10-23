@@ -3,23 +3,25 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../app/model/product';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ViewChild } from '@angular/core';
+import { DataTable } from 'primeng/primeng';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css',
+  styleUrls: [ './product.component.css',
     '../../../../node_modules/primeng/resources/primeng.min.css',
     '../../../../node_modules/primeng/resources/themes/omega/theme.css'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ProductService, FormBuilder, Validators]
+  providers: [ProductService, FormBuilder, Validators],
 })
 export class ProductComponent implements OnInit {
+  @ViewChild('productDataTable') productDataTable: DataTable;
   public products: Product[];
   public products_error: Boolean = false;
   public product = new Product();
   public isAdd: Boolean = false;
   public isEdit: Boolean = false;
-
   public isLoadingData: Boolean = false;
 
   addProductFG: FormGroup;
@@ -58,7 +60,23 @@ export class ProductComponent implements OnInit {
     p2.Id = 2;
     p2.Name = 'Quần Jean';
     p2.Price = 200000;
-    this.products = [p1, p2];
+    const p3: Product = new Product();
+    p3.Id = 3;
+    p3.Name = 'Mũ lưỡi trai';
+    p3.Price = 120000;
+    const p4: Product = new Product();
+    p4.Id = 4;
+    p4.Name = 'Áo sơ mi';
+    p4.Price = 200000;
+    const p5: Product = new Product();
+    p5.Id = 2;
+    p5.Name = 'Quần Jean';
+    p5.Price = 200000;
+    const p6: Product = new Product();
+    p6.Id = 2;
+    p6.Name = 'Quần Jean';
+    p6.Price = 200000;
+    this.products = [p1, p2, p3, p4, p5, p6];
     // this.getAllProducts();
   }
 

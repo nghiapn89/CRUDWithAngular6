@@ -1,9 +1,10 @@
 <section class="content">
-    <h3>Danh sách sản phẩm</h3>
+    <h4>Danh sách sản phẩm</h4>
     <div>
+        <div><button type="button" (click)="addProductDialog()" pButton icon="fa fa-external-link-square" label="Thêm mới" class="text-right"></button></div>
         <div style="padding-top:10px">
-            <p-dataTable #dt [value]="products" [responsive]="true" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,50,100,200]"
-                [scrollable]="true" scrollHeight="200px">
+            <p-dataTable #productDataTable [value]="products" [responsive]="true" [rows]="5" [paginator]="true"
+                [rowsPerPageOptions]="[5,10,20,50,100,200]" [scrollable]="true" scrollHeight="200px">
                 <!-- <p-header>
                     <div class="ui-helper-clearfix">
                         <button type="button" pButton icon="fa fa-file-excel-o" iconPos="left" label="EXCEL" (click)="dt.exportCSV()"
@@ -25,4 +26,7 @@
             </p-dataTable>
         </div>
     </div>
+    <p-dialog header="Thêm sản phẩm" [(visible)]="displayAddDialog" modal="true" width="450" height="400">
+
+    </p-dialog>
 </section>
