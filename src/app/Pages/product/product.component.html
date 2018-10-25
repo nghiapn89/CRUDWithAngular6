@@ -1,7 +1,8 @@
 <section class="content">
     <h4>Danh sách sản phẩm</h4>
     <div>
-        <div><button type="button" (click)="addProductDialog()" pButton icon="fa fa-external-link-square" label="Thêm mới" class="text-right"></button></div>
+        <div><button type="button" (click)="addProductDialog()" pButton icon="fa fa-external-link-square" label="Thêm mới"
+                class="text-right"></button></div>
         <div style="padding-top:10px">
             <p-dataTable #productDataTable [value]="products" [responsive]="true" [rows]="5" [paginator]="true"
                 [rowsPerPageOptions]="[5,10,20,50,100,200]" [scrollable]="true" scrollHeight="200px">
@@ -26,7 +27,55 @@
             </p-dataTable>
         </div>
     </div>
-    <p-dialog header="Thêm sản phẩm" [(visible)]="displayAddDialog" modal="true" width="450" height="400">
-
+    <p-dialog header="Thêm sản phẩm" [(visible)]="displayAddDialog" modal="true" width="650" height="500">
+        <form #editProductForm="ngForm" [formGroup]="addProductFG" class="form-horizontal" style="width:600px;height:500px">
+            <div *ngIf="isAdd">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-3"><label class="control-label lblTextLeft text-left" for="name">Tên sản
+                                phẩm :</label></div>
+                        <div class="col-md-8">
+                            <input id="Name" name="Name" type="text" placeholder="Tên sản phẩm" class="form-control input-md"
+                                formControlName="name" [(ngModel)]="product.Name" required minLength="1" maxLength="150" />
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3"><label class="control-label lblTextLeft text-left" for="name">Đơn giá :</label></div>
+                        <div class="col-md-8">
+                            <input id="Price" name="Price" type="number" placeholder="Đơn giá" class="form-control input-md"
+                                formControlName="price" [(ngModel)]="product.Price" required min="0" max="999999999999999999" />
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3"><label class="control-label lblTextLeft text-left" for="name">Mô tả :</label></div>
+                        <div class="col-md-8">
+                            <textarea id="Description" name="Description" rows="5" cols="20" placeholder="Mô tả chi tiết sản phẩm"
+                                class="form-control input-md" formControlName="description" [(ngModel)]="product.Description"
+                                maxlength="500"></textarea>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label"></label>
+                        <div class="col-md-12">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-8">
+                                <button type="button" id="btnSave" name="btnSave" class="btn btn-primary" [disabled]="!addProductFG.valid"
+                                    (click)="addProduct(product);addProductForm.reset();">
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    Save
+                                </button>
+                                <button id="btnCancel" name="btnCancel" class="btn btn-warning" (click)="clearData();">
+                                    <span class="glyphicon glyphicon-remove"></span>Cancel
+                                </button>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
     </p-dialog>
 </section>
