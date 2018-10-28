@@ -27,10 +27,10 @@ export class ProductComponent implements OnInit {
   addProductFG: FormGroup;
   editProductFG: FormGroup;
 
-  createUrl = 'product/create';
-  updateUrl = 'product/update';
-  deleteUrl = 'product/delate';
-  getAllUrl = 'product/getAll';
+  createUrl = ' ';
+  updateUrl = ' ';
+  deleteUrl = ' ';
+  getAllUrl = ' ';
 
   addSuccess: boolean;
   editSuccess: boolean;
@@ -42,13 +42,11 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.addProductFG = this.fb.group({
-      'name': [null, [Validators.required, Validators.minLength(1), Validators.maxLength(150)]],
-      'price': [null, [Validators.required, Validators.min(0), Validators.max(999999999999999999)]],
-      'description' : [null, [Validators.maxLength(500)]],
+      'name': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     });
 
     this.editProductFG = this.fb.group({
-      'name': [null, [Validators.required, Validators.minLength(1), Validators.maxLength(150)]],
+      'name': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     });
 
     this.isAdd = true;
